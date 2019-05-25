@@ -9,4 +9,4 @@
 
 ### How to use
 
-Simply download all files into your work root directory (like /var/www for linux systems)
+Simply download index.php & info.php files into your work root directory (like /var/www for linux systems)
