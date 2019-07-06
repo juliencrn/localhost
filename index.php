@@ -1,97 +1,143 @@
+<?php
+/**
+ * Welcome to Localhost!
+ *
+ * Installation:
+ * - Place this file and the "assets" folder
+ *   at the root of your local server.
+ *   Example
+ *   /var/www/html/
+ *     - index.php (this current file)
+ *     - assets/
+ *
+ * Thanks at Juliette for the wonderful design
+ * - Juliette Rousseaux - Web designer https://www.malt.fr/profile/julietterousseaux
+ *
+ * Credits & thanks at:
+ * - Tachyons: CSS functional framework https://tachyons.io/
+ * - Dracula: Color palette https://draculatheme.com/
+ *
+ * @version 2.0.0
+ * @link https://github.com/Junscuzzy/localhost
+ */
+
+// Config
+$title = 'Localhost'; // string required
+$description = 'A nice darkly localhost home page'; // string required
+$menu = array(
+  array("label" => "Phpmyadmin", "path" => "http://localhost/phpmyadmin", "class" => "pma"),
+  array("label" => "Github", "path" => "https://github.com/", "class" => "github"),
+  array("label" => "PHP info", "path" => "http://localhost/assets/utils/phpinfo.php", "class" => "php")
+);
+$theme = 'default'; // 'default' | 'dracula'
+?>
+
 <!doctype html>
-<html lang="fr">
+
+<html lang="en">
 <head>
-    <title>localhost</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title><?php echo $title; ?></title>
+  <meta name="description" content="<?php echo $description; ?>">
+
+  <link rel="stylesheet" href="./assets/css/tachyons-v4.11.02.css">
+  <link rel="stylesheet" href="./assets/css/<?php echo $theme; ?>-theme-vars.css">
+  <link rel="stylesheet" href="./assets/css/theme.css">
 </head>
 
-<body>
-<div id="page">
-    <nav class="navbar navbar-dark bg-primary navbar-expand-sm">
-        <div class="container">
-            <a class="navbar-brand" href="http://localhost/">Localhost</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" href="http://localhost/phpmyadmin">PhpMyAdmin</a></li>
-                    <li class="nav-item"><a class="nav-link" href="info.php">PHP Info</a></li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a href="https://developers.google.com/speed/pagespeed/insights/" class="nav-link">
-                            PageSpeed
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="https://github.com/login" class="nav-link">
-                            Github
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body class="bg min-vh-100 w-100 h-100 ma0 ph0 pt4 monoxil">
+  <main class="w-90 center" style="max-width: 1200px;">
 
-    <header>
-        <div class="container">
-            <h1 class="d-flex justify-content-between" style="height: 150px; line-height: 150px; white-space: nowrap;">
-                Sites
-                <div>
-                    <span class="badge badge-primary badge-pill"></span>
-                </div>
-            </h1>
-        </div>
-    </header>
+      <!-- header -->
+      <header class="w-100 w-60-ns center tc mb4 mb5-ns">
+        <h1 class="f3 f2-ns ttu white fw4 ma2">
+            <?php echo $title; ?>
+        </h1>
+        <h2 class="white f6 f5-ns fw4">
+            <?php echo $description; ?>
+        </h2>
+      </header>
 
-    <section id="liste-projets">
-        <div class="container">
-            <div class="row">
-                <?php
-                $nb_fichier = 0;
-                $hostname = $_SERVER['HTTP_HOST'];
-                if ( $dossier = opendir( dirname( __FILE__ ) ) ) {
-                    while (false !== ($fichier = readdir( $dossier ))) {
-                        if ( $fichier != '.' && $fichier != '..' && !preg_match( '#^localhost$|^phpmyadmin$|\.ico$|\.txt$|\.md|^lab$|\.gzip$|\.rar$|\.sql$|\.zip$|\.html$|\.php$|\.jpeg$|\.jpg$|\.css$|\.js$|\.sass$|\.scss$|\.json$|\.git$|\^.|\.py$|\.sh$|\.gif$|\.DS_Store$#', $fichier ) ) {
-                            $nb_fichier++;
-                            $fichierName = str_replace( ['-', '_'], ' ', $fichier );
+      <!-- Buttons section -->
+      <?php if ( !empty( $menu ) ) { ?>
+          <section class="w-100 w-80-m w-60-l center mb3 mb4-ns">
+              <div class="flex flex-wrap justify-center">
+                  <?php foreach ( $menu as $item ) { ?>
+                      <a href="<?php echo $item['path']; ?>"
+                         class="<?php echo $item['class']; ?> f6 f5-ns shadow-5 link grow ba br-pill ttu tc ph4 pv3 mh3 mv2">
+                          <?php echo $item['label']; ?>
+                      </a>
+                  <?php } ?>
+              </div>
+          </section>
+      <?php } ?>
 
-                            echo '
-                            <div class="col-xs-12 col-md-6 col-lg-4">
-                              <div class="card mb-3">
-                                <div class="card-body">
-                                  <h3 class="card-title text-capitalize">' . $fichierName . '</h3>
-                                  <p class="card-text"></p>
-                                  <a href="http://' . $hostname . '/' . $fichier . '/index.php" class="btn btn-primary">Enter</a>
+      <!-- Projects list section -->
+      <section class="w-100">
+        <?php
+
+        // Create CSS classes for project background colors from a array of colors
+        function getColor($number) {
+            $colors = array(
+                "red", "blue", "yellow", "orange",
+                "light-blue", "light-green",
+                "pink", "navy", "grey", "brown"
+            );
+            return (string) "bg-" . $colors[$number % count($colors)];
+        }
+
+        // Create pretty project name from folder name
+        function cleanString($string) {
+            $str = str_replace('-', ' ', $string);
+            $str = str_replace('_', ' ', $str);
+            return (string) $str;
+        }
+
+        // Keep only folder (not files.ext or .hiddenFolder)
+        $files = array();
+        $iterator = new DirectoryIterator(dirname(__FILE__));
+        foreach ($iterator as $fileinfo) {
+            $isHidden = substr($filename, 0, 1) === '.';
+            $isDot = $fileinfo->isDot();
+            $isDir = $fileinfo->isDir();
+            $isExclude = in_array($filename,array('assets'));
+
+            if ( !$isDot && $isDir && !$isHidden && !$isExclude ) {
+                $filename = $fileinfo->getFilename();
+                $files[$fileinfo->getMTime()] = array(
+                    "name" => cleanString($filename),
+                    "path" => './' . $filename,
+                    "date" => gmdate('d|m|y', $fileinfo->getMTime())
+                );
+            }
+        }
+        // Then sort by modified date
+        ksort($files);
+
+        // List each files in current directory
+        $i = 0;
+        foreach ($files as $file) { ?>
+
+                <article class="fl w-100 w-50-m w-25-l pa4">
+                    <a href="<?php echo $file["path"]; ?>">
+                        <div class="relative square grow link">
+                            <div class="<?php echo getColor($i); ?> shadow-5 absolute top-0 bottom-0 left-0 right-0 flex flex-column justify-end">
+                                <div class="ph3">
+                                    <h3 class="f4 black fw7 ttu" style="word-break: break-all;">
+                                        <?php echo $file["name"]; ?>
+                                    </h3>
+                                    <p class="f6 black">
+                                        <?php echo $file["date"]; ?>
+                                    </p>
                                 </div>
-                              </div>
-                            </div>';
-                        }
-                    }
-                    echo '<input type="hidden" id="nbr_site" value="' . $nb_fichier . '">';
-                } else {
-                    echo 'Le dossier n\' a pas pu être ouvert';
-                } ?>
-            </div>
-        </div>
-    </section>
+                            </div>
+                        </div>
+                    </a>
+                </article>
 
-</div><!-- /page -->
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-<script type='text/javascript'>
-    // Update project count
-    jQuery(function($) {
-        $('header span.badge').html(
-            $('input#nbr_site').val()
-        )
-    })
-</script>
+                <?php $i++; // Increment used by getColors() ?>
+            <?php } ?>
+      </section>
+  </main>
 </body>
 </html>

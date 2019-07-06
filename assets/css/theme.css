@@ -1,0 +1,39 @@
+/* Fonts */
+@font-face {
+    font-family: 'Monoxil';
+    src: url('../fonts/Monoxil.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+.monoxil {
+    font-family: 'Monoxil', monospace;
+}
+
+/* Utils */
+.square:after {
+    content: ' ';
+    display: block;
+    padding-bottom: 100%;
+}
+
+/* Colors */
+.bg { background-color: var(--color-bg); }
+
+.pma { color: var(--color-pma); }
+.github { color: var(--color-github); }
+.php{ color: var(--color-trello); }
+
+.bg-pma { background-color: var(--color-pma); }
+.bg-github { background-color: var(--color-github); }
+.bg-php { background-color: var(--color-trello); }
+
+.bg-red { background-color: var(--color-card-red); }
+.bg-blue { background-color: var(--color-card-blue); }
+.bg-yellow { background-color: var(--color-card-yellow); }
+.bg-orange { background-color: var(--color-card-orange); }
+.bg-light-blue { background-color: var(--color-card-light-blue); }
+.bg-light-green { background-color: var(--color-card-light-green); }
+.bg-pink { background-color: var(--color-card-pink); }
+.bg-navy { background-color: var(--color-card-navy); }
+.bg-grey { background-color: var(--color-card-grey); }
+.bg-brown { background-color: var(--color-card-brown); }

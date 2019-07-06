@@ -1,0 +1,19 @@
+:root {
+    --color-bg: #282a36;
+    --color-font: #f8f8f2;
+
+    --color-pma: #ffb86c;
+    --color-github: #f8f8f2;
+    --color-trello: #6272a4;
+
+    --color-card-red: #ff5555;
+    --color-card-blue: #6272a4;
+    --color-card-yellow: #f1fa8c;
+    --color-card-orange: #ffb86c;
+    --color-card-light-blue: #8be9fd;
+    --color-card-light-green: #50fa7b;
+    --color-card-pink: #ff79c6;
+    --color-card-navy: #bd93f9;
+    --color-card-grey: #44475a;
+    --color-card-brown: #ffb86c;
+}
