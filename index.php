@@ -30,7 +30,7 @@
  */
 $title = 'Localhost'; // string required
 $description = 'A nice darkly localhost home page'; // string required
-$theme = 'dracula'; // 'default' | 'dracula'
+$theme = 'default'; // 'default' | 'dracula'
 $menu = array(
   array(
       "label" => "Phpmyadmin", 
