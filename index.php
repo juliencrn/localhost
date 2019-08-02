@@ -30,7 +30,7 @@
  */
 $title = 'Localhost'; // string required
 $description = 'A nice darkly localhost home page'; // string required
-$theme = 'default'; // 'default' | 'dracula'
+$theme = 'dracula'; // 'default' | 'dracula'
 $menu = array(
   array(
       "label" => "Phpmyadmin", 
@@ -66,7 +66,7 @@ function getColor($number) {
     $colors = array(
         "red", "blue", "yellow", "orange",
         "light-blue", "light-green",
-        "pink", "navy", "grey", "brown"
+        "pink", "navy", "grey"
     );
     return (string) "bg-" . $colors[$number % count($colors)];
 }
